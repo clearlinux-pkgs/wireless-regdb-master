@@ -4,7 +4,7 @@
 #
 Name     : wireless-regdb-master
 Version  : 2017.12.23
-Release  : 2
+Release  : 3
 URL      : https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git/snapshot/wireless-regdb-master-2017-12-23.tar.gz
 Source0  : https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git/snapshot/wireless-regdb-master-2017-12-23.tar.gz
 Summary  : Linux wireless regulatory database
@@ -37,20 +37,20 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1523111892
+export SOURCE_DATE_EPOCH=1523111981
 make  %{?_smp_mflags} PYTHON=/usr/bin/python2 install DESTDIR=%{buildroot}
 
 %install
-export SOURCE_DATE_EPOCH=1523111892
+export SOURCE_DATE_EPOCH=1523111981
 rm -rf %{buildroot}
-%make_install FIRMWARE_PATH=%{buildroot}/usr/lib/firmware LSB_ID="clr"
+%make_install FIRMWARE_PATH=/usr/lib/firmware LSB_ID="clr"
 
 %files
 %defattr(-,root,root,-)
-/builddir/build/BUILDROOT/wireless-regdb-master-2017.12.23-2.x86_64/usr/lib/firmware/regulatory.db
-/builddir/build/BUILDROOT/wireless-regdb-master-2017.12.23-2.x86_64/usr/lib/firmware/regulatory.db.p7s
 /usr/lib/crda/pubkeys/sforshee.key.pub.pem
 /usr/lib/crda/regulatory.bin
+/usr/lib/firmware/regulatory.db
+/usr/lib/firmware/regulatory.db.p7s
 
 %files doc
 %defattr(-,root,root,-)
