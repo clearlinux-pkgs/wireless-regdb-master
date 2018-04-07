@@ -1,0 +1,3 @@
+PYTHON=/usr/bin/python2 install PREFIX=%{buildroot}/tmp  FIRMWARE_PATH=%{buildroot}/usr/lib/firmware LSB_ID="clr"
+
+

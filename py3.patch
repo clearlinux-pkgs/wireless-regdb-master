@@ -1,0 +1,16 @@
+--- wireless-regdb-master-2017-12-23/db2fw.py~	2018-04-07 14:24:02.000000000 +0000
++++ wireless-regdb-master-2017-12-23/db2fw.py	2018-04-07 14:27:09.745531063 +0000
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python2
+ 
+ from io import StringIO
+ import struct
+--- wireless-regdb-master-2017-12-23/db2bin.py~	2018-04-07 14:22:05.000000000 +0000
++++ wireless-regdb-master-2017-12-23/db2bin.py	2018-04-07 14:31:13.960003984 +0000
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python2
+ 
+ from cStringIO import StringIO
+ import struct

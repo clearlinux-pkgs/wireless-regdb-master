@@ -1,0 +1,1 @@
+FIRMWARE_PATH=%{buildroot}/usr/lib/firmware LSB_ID="clr"
