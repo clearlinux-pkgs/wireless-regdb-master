@@ -4,7 +4,7 @@
 #
 Name     : wireless-regdb-master
 Version  : 2017.12.23
-Release  : 3
+Release  : 4
 URL      : https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git/snapshot/wireless-regdb-master-2017-12-23.tar.gz
 Source0  : https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git/snapshot/wireless-regdb-master-2017-12-23.tar.gz
 Summary  : Linux wireless regulatory database
