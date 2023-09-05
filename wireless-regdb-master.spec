@@ -4,10 +4,10 @@
 # Using build pattern: make
 #
 Name     : wireless-regdb-master
-Version  : 2023.05.03
-Release  : 17
-URL      : https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git/snapshot/wireless-regdb-master-2023-05-03.tar.gz
-Source0  : https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git/snapshot/wireless-regdb-master-2023-05-03.tar.gz
+Version  : 2023.09.01
+Release  : 18
+URL      : https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git/snapshot/wireless-regdb-master-2023-09-01.tar.gz
+Source0  : https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git/snapshot/wireless-regdb-master-2023-09-01.tar.gz
 Summary  : Linux wireless regulatory database
 Group    : Development/Tools
 License  : ISC
@@ -40,15 +40,18 @@ man components for the wireless-regdb-master package.
 
 
 %prep
-%setup -q -n wireless-regdb-master-2023-05-03
-cd %{_builddir}/wireless-regdb-master-2023-05-03
+%setup -q -n wireless-regdb-master-2023-09-01
+cd %{_builddir}/wireless-regdb-master-2023-09-01
+pushd ..
+cp -a wireless-regdb-master-2023-09-01 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1683150590
+export SOURCE_DATE_EPOCH=1693955635
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -59,14 +62,26 @@ export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -f
 export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 make  %{?_smp_mflags}  PYTHON=/usr/bin/python install DESTDIR=%{buildroot}
 
+pushd ../buildavx2
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
+make  %{?_smp_mflags}  PYTHON=/usr/bin/python install DESTDIR=%{buildroot}
+popd
 
 %install
-export SOURCE_DATE_EPOCH=1683150590
+export SOURCE_DATE_EPOCH=1693955635
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/wireless-regdb-master
-cp %{_builddir}/wireless-regdb-master-2023-05-03/LICENSE %{buildroot}/usr/share/package-licenses/wireless-regdb-master/ecc93a54e4f154e77e88c5cc2c975bfb72916fa0 || :
-cp %{_builddir}/wireless-regdb-master-2023-05-03/debian-example/copyright %{buildroot}/usr/share/package-licenses/wireless-regdb-master/81e09d9b5b8dfbf0f7adc82479395bd00f26839b || :
+cp %{_builddir}/wireless-regdb-master-2023-09-01/LICENSE %{buildroot}/usr/share/package-licenses/wireless-regdb-master/ecc93a54e4f154e77e88c5cc2c975bfb72916fa0 || :
+cp %{_builddir}/wireless-regdb-master-2023-09-01/debian-example/copyright %{buildroot}/usr/share/package-licenses/wireless-regdb-master/81e09d9b5b8dfbf0f7adc82479395bd00f26839b || :
+pushd ../buildavx2/
+%make_install_v3 FIRMWARE_PATH=/usr/lib/firmware LSB_ID="clr"
+popd
 %make_install FIRMWARE_PATH=/usr/lib/firmware LSB_ID="clr"
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
